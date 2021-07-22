@@ -75,18 +75,47 @@ public class VendingMachineCLI {
 		System.out.println("===============================");
 		System.out.println("         Purchase Menu         ");
 		System.out.println("===============================");
+
 		boolean stay = true;
+		Money myMoney = new Money();
+
 
 		while(stay) {
+			System.out.println("Current Money Provided: "+ myMoney.getCurrent());
 			String choice = (String) menu.getChoiceFromOptions(PURCHASE_OPTIONS);
-			if (choice.equals("Feed Money")) {
 
+			if (choice.equals("Feed Money")) {
+				feedMoney(myMoney);
 			} else if (choice.equals("Select Product")) {
 
 			} else if (choice.equals("Finish Transaction")) {
 				stay = false;
 			}
 		}
+
+
+	}
+
+	public void feedMoney(Money myMoney){
+
+		Scanner scanner = new Scanner(System.in);
+
+		boolean bool= true;
+
+		while(bool) {
+			System.out.print("How much would you like to add: ");
+			String amount = scanner.nextLine();
+			double myAmount = Double.parseDouble(amount);
+			myMoney.feedCurrent(myAmount);
+
+			System.out.print("Would you like to add more? (Y/N)");
+			String yesOrNo = scanner.nextLine().toLowerCase();
+			if (yesOrNo.equals("n")){
+				bool = false;
+			}
+		}
+
+
 	}
 
 	public static void main(String[] args) {

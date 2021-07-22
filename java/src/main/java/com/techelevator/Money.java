@@ -1,18 +1,22 @@
 package com.techelevator;
 
+import java.math.BigDecimal;
+
 public class Money {
 
-    private int current = 0;
+    private double current = 0;
 
-    public int getCurrent() {
+    public double getCurrent() {
         return current;
     }
 
-    public void feedCurrent(int money){
+    public void feedCurrent(double money){
         this.current += money;
     }
 
-    public void makePurchase(int cost){
-        this.current -= cost;
+    public void makePurchase(double cost) {
+        if (current >= cost) {
+            this.current -= cost;
+        }
     }
 }
