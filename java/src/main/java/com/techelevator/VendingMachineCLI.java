@@ -98,7 +98,9 @@ public class VendingMachineCLI {
 
 	public void feedMoney(Money myMoney){
 
-		Scanner scanner = new Scanner(System.in);
+
+
+
 
 		boolean bool= true;
 
@@ -117,7 +119,13 @@ public class VendingMachineCLI {
 
 
 	}
+     public void makePurchase (){
+		Scanner scanner = new Scanner(System.in);
+		 System.out.println("Which item would you like to select");
+		 String wholeValue = scanner.nextLine();
 
+
+	 }
 	public static void main(String[] args) {
 		Menu menu = new Menu(System.in, System.out);
 		VendingMachineCLI cli = new VendingMachineCLI(menu);
