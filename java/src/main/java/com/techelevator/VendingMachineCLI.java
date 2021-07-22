@@ -98,14 +98,15 @@ public class VendingMachineCLI {
 
 
 		while(stay) {
-			System.out.println("Current Money Provided: "+ myMoney.getCurrent());
+			System.out.println("\nCurrent Money Provided: "+ myMoney.getCurrent());
 			String choice = (String) menu.getChoiceFromOptions(PURCHASE_OPTIONS);
 
 			if (choice.equals("Feed Money")) {
 				feedMoney(myMoney);
 			} else if (choice.equals("Select Product")) {
-				selectProduct();
+				selectProduct(myMoney);
 			} else if (choice.equals("Finish Transaction")) {
+				//make and return change
 				stay = false;
 			}
 		}
@@ -117,12 +118,23 @@ public class VendingMachineCLI {
 		boolean bool= true;
 
 		while(bool) {
-			System.out.print("How much would you like to add: ");
+
+			System.out.print("\nHow much would you like to add: ");
 			String amount = scanner.nextLine();
 			double myAmount = Double.parseDouble(amount);
-			myMoney.feedCurrent(myAmount);
 
-			System.out.print("Would you like to add more? (Y/N)");
+			List<Double> checkAmount = new ArrayList<>();
+			checkAmount.add(1.00);
+			checkAmount.add(2.00);
+			checkAmount.add(5.00);
+			checkAmount.add(10.00);
+
+			if (checkAmount.contains(myAmount)) {
+				myMoney.feedCurrent(myAmount);
+			}
+			else System.out.println("Invalid amount");
+
+			System.out.print("\nWould you like to add more? (Y/N)");
 			String yesOrNo = scanner.nextLine().toLowerCase();
 			if (yesOrNo.equals("n")){
 				bool = false;
@@ -131,21 +143,35 @@ public class VendingMachineCLI {
 
 
 	}
-     public void makePurchase (Money myMoney){
-		Scanner scanner = new Scanner(System.in);
+     public void selectProduct(Money myMoney) {
+		 displayItems();
+		 Scanner scanner = new Scanner(System.in);
+
 		 System.out.println("Which item would you like to select");
+		 String itemToPurchase = scanner.nextLine();
 
+		 boolean valid = false;
 
-		 String wholeValue = scanner.nextLine();
-		 System.out.println(myMoney.getCurrent());
+		 for (Item item : itemList) {
+			 if (item.getSlot().equals(itemToPurchase)) {
+			 	//Copy item?
+			 	valid = true;
+			 }
 
+			if (valid){
+
+				//check balance
+				// process transaction
+
+			}else
+				System.out.println("Invalid entire");
+
+		 }
 	 }
 
-	 public void selectProduct() {
-		displayItems();
 
 
-	 }
+
 	public static void main(String[] args) {
 		Menu menu = new Menu(System.in, System.out);
 		VendingMachineCLI cli = new VendingMachineCLI(menu);
