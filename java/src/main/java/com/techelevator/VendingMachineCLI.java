@@ -72,9 +72,9 @@ public class VendingMachineCLI {
 	}
 
 	public void displayPurchaseMenu() {
-		System.out.println("=============================");
-		System.out.println("        Purchase Menu        ");
-		System.out.println("=============================");
+		System.out.println("===============================");
+		System.out.println("         Purchase Menu         ");
+		System.out.println("===============================");
 		boolean stay = true;
 
 		while(stay) {
@@ -86,11 +86,8 @@ public class VendingMachineCLI {
 			} else if (choice.equals("Finish Transaction")) {
 				stay = false;
 			}
-
 		}
 	}
-
-
 
 	public static void main(String[] args) {
 		Menu menu = new Menu(System.in, System.out);
