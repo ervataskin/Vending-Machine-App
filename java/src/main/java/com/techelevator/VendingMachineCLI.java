@@ -19,6 +19,7 @@ public class VendingMachineCLI {
 
 	private Menu menu;
 	private List<Item> itemList = new ArrayList<>();
+	Money money = new Money();
 
 	public VendingMachineCLI(Menu menu) {
 		this.menu = menu;
@@ -52,8 +53,24 @@ public class VendingMachineCLI {
 				double price = Double.parseDouble(lineArr[2]);
 				String type = lineArr[3];
 
-				Item items = new Item(slot, name, price, type);
-				itemList.add(items);
+				// if type = Chips
+					// Item item = new Chip
+				if (type.equals("Chip")) {
+					Item item = new Chip(slot, name, price);
+					itemList.add(item);
+				} else if (type.equals("Drink")) {
+					Item item = new Drink(slot, name, price);
+					itemList.add(item);
+				} else if (type.equals("Candy")) {
+					Item item = new Candy(slot, name, price);
+					itemList.add(item);
+				} else if (type.equals("Gum")) {
+					Item item = new Gum(slot, name, price);
+					itemList.add(item);
+				}
+
+				//Item items = new Item(slot, name, price);
+			//	itemList.add(item);
 
 			}
 		} catch (FileSystemNotFoundException | FileNotFoundException e) {
@@ -67,7 +84,7 @@ public class VendingMachineCLI {
 		System.out.println("===============================");
 
 		for (Item item : itemList) {
-			System.out.println(item.getSlot() + " | " + item.getName() + " | " + item.getPrice() + " | " + item.getType());
+			System.out.println(item.getSlot() + " | " + item.getName() + " | " + item.getPrice() + " | " + item.getInventory());
 		}
 	}
 
@@ -87,20 +104,15 @@ public class VendingMachineCLI {
 			if (choice.equals("Feed Money")) {
 				feedMoney(myMoney);
 			} else if (choice.equals("Select Product")) {
-
+				selectProduct();
 			} else if (choice.equals("Finish Transaction")) {
 				stay = false;
 			}
 		}
-
-
 	}
 
 	public void feedMoney(Money myMoney){
-
-
-
-
+		Scanner scanner = new Scanner(System.in);
 
 		boolean bool= true;
 
@@ -119,10 +131,18 @@ public class VendingMachineCLI {
 
 
 	}
-     public void makePurchase (){
+     public void makePurchase (Money myMoney){
 		Scanner scanner = new Scanner(System.in);
 		 System.out.println("Which item would you like to select");
+
+
 		 String wholeValue = scanner.nextLine();
+		 System.out.println(myMoney.getCurrent());
+
+	 }
+
+	 public void selectProduct() {
+		displayItems();
 
 
 	 }

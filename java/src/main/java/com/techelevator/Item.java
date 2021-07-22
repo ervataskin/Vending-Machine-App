@@ -1,21 +1,20 @@
 package com.techelevator;
 
 
-public class Item {
+public abstract class Item {
 
     private String slot;
     private String name;
     private Double price;
     private String type;
 
-    private int inventory ;
+    private int inventory;
 
-    public Item(String slot, String name, Double price, String type) {
-        this.inventory =5;
+    public Item(String slot, String name, Double price) {
+        this.inventory = 5;
         this.slot = slot;
         this.name = name;
         this.price = price;
-        this.type = type;
     }
     public String getSlot() {
         return slot;
@@ -34,5 +33,7 @@ public class Item {
     public String getType() {
         return type;
     }
+
+    public abstract String getSound();
 
 }
