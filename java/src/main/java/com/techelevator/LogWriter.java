@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class LogWriter {
 
@@ -21,7 +23,7 @@ public class LogWriter {
             try {
                 FileOutputStream fileOutputStream = new FileOutputStream(file, true);
                 writer = new PrintWriter(fileOutputStream);
-                writer.println(lineOfText);
+                writer.println(getCurrentTime()+lineOfText);
 
             }catch (FileNotFoundException e){
                 e.printStackTrace();
@@ -30,7 +32,7 @@ public class LogWriter {
         }else {
             try {
                 writer = new PrintWriter(this.file);
-                writer.println(lineOfText);
+                writer.println(getCurrentTime()+lineOfText);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -38,6 +40,10 @@ public class LogWriter {
         writer.flush();
         writer.close();
 
+    }
+    private String getCurrentTime (){
+        String date = new SimpleDateFormat("MM/dd/yy hh:mm:ss a").format(new Date());
+        return date;
     }
 
 

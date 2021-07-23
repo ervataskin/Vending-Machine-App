@@ -1,1 +1,5 @@
 
+FEED MONEY: 0.00 10.00
+Item sold: Cowtales Item slot: B2 Before Transaction: 10.00 After Transaction: 8.50
+07/23/21 04:16:05 PMFEED MONEY: 0.00 10.00
+07/23/21 04:16:36 PMItem sold: Dr. Salt Item slot: C2 Before Transaction: 10.00 After Transaction: 8.50
