@@ -23,7 +23,6 @@ public class Money {
 
         double amountInPennies = amount.doubleValue()*100;
 
-
        int quarter;
        int dime;
        int nickel;
@@ -35,7 +34,13 @@ public class Money {
         nickel = (int) (amountInPennies / 5);
 
 
+        this.current = new BigDecimal("0.00");
+        LogWriter log = new LogWriter("log.txt");
+
+        log.writeToFile("GIVE CHANGE: $" + amount + " $" + this.current);
+
         return "Quarters: " + quarter + "\nDimes: " + dime + "\nNickels: " + nickel;
+
     }
 
 

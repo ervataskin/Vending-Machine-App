@@ -23,7 +23,7 @@ public class LogWriter {
             try {
                 FileOutputStream fileOutputStream = new FileOutputStream(file, true);
                 writer = new PrintWriter(fileOutputStream);
-                writer.println(getCurrentTime()+lineOfText);
+                writer.println(getCurrentTime() + " " + lineOfText);
 
             }catch (FileNotFoundException e){
                 e.printStackTrace();
@@ -32,7 +32,7 @@ public class LogWriter {
         }else {
             try {
                 writer = new PrintWriter(this.file);
-                writer.println(getCurrentTime()+lineOfText);
+                writer.println(getCurrentTime() + " " + lineOfText);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -42,8 +42,7 @@ public class LogWriter {
 
     }
     private String getCurrentTime (){
-        String date = new SimpleDateFormat("MM/dd/yy hh:mm:ss a").format(new Date());
-        return date;
+       return new SimpleDateFormat("MM/dd/yy hh:mm:ss a").format(new Date());
     }
 
 

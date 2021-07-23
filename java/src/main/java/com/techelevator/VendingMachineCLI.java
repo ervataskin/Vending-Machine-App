@@ -16,12 +16,13 @@ public class VendingMachineCLI {
 
     private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
     private static final String MAIN_MENU_OPTION_PURCHASE = "Purchase";
-    private static final String[] MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE};
+    private static final String MAIN_MENU_EXIT = "Exit";
+    private static final String[] MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_EXIT};
     private static final String[] PURCHASE_OPTIONS = {"Feed Money", "Select Product", "Finish Transaction"};
 
     private Menu menu;
     private List<Item> itemList = new ArrayList<>();
-    Money money = new Money();
+    //Money money = new Money();
 
     public VendingMachineCLI(Menu menu) {
         this.menu = menu;
@@ -38,6 +39,9 @@ public class VendingMachineCLI {
                 displayItems();
             } else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
                 displayPurchaseMenu();
+            } else if (choice.equals(MAIN_MENU_EXIT)) {
+                System.out.println("Thank you for using the Vendo-Matic 800!");
+                System.exit(1);
             }
         }
     }
@@ -55,8 +59,6 @@ public class VendingMachineCLI {
                 BigDecimal price = new BigDecimal(lineArr[2]);
                 String type = lineArr[3];
 
-                // if type = Chips
-                // Item item = new Chip
                 if (type.equals("Chip")) {
                     Item item = new Chip(slot, name, price);
                     itemList.add(item);
@@ -71,9 +73,6 @@ public class VendingMachineCLI {
                     itemList.add(item);
                 }
 
-                //Item items = new Item(slot, name, price);
-                //	itemList.add(item);
-
             }
         } catch (FileSystemNotFoundException | FileNotFoundException e) {
             e.printStackTrace();
@@ -86,7 +85,7 @@ public class VendingMachineCLI {
         System.out.println("===============================");
 
         for (Item item : itemList) {
-            System.out.println(item.getSlot() + " | " + item.getName() + " | " + item.getPrice() + " | " + item.getInventory());
+            System.out.println(item.getSlot() + " | " + item.getName() + " | $" + item.getPrice() + " | " + item.getInventory() + " Remaining");
         }
     }
 
@@ -100,7 +99,7 @@ public class VendingMachineCLI {
 
 
         while (stay) {
-            System.out.println("\nCurrent Money Provided: " + myMoney.getCurrent());
+            System.out.println("\nCurrent Money Provided: $" + myMoney.getCurrent());
             String choice = (String) menu.getChoiceFromOptions(PURCHASE_OPTIONS);
 
             if (choice.equals("Feed Money")) {
@@ -108,8 +107,11 @@ public class VendingMachineCLI {
             } else if (choice.equals("Select Product")) {
                 selectProduct(myMoney);
             } else if (choice.equals("Finish Transaction")) {
+                System.out.println("Thank you for using the Vendo-Matic 800!");
+                System.out.println("Here is your change. Have a nice day!");
                 System.out.println(myMoney.getChange(myMoney.getCurrent()));
-                stay = false;
+                System.exit(1);
+
             }
         }
     }
@@ -134,7 +136,7 @@ public class VendingMachineCLI {
                 if (checkAmount.contains(myAmount)) {
                     myMoney.feedCurrent(myAmount);
                     LogWriter log = new LogWriter("log.txt");
-                    log.writeToFile("FEED MONEY: " + prevAmount + " " + myMoney.getCurrent());
+                    log.writeToFile("FEED MONEY: $" + prevAmount + " $" + myMoney.getCurrent());
                 } else {
                     System.out.println("\nInvalid amount, returning back to purchase menu.");
                     break;
@@ -169,7 +171,7 @@ public class VendingMachineCLI {
 
             for (Item item : itemList) {
                 if (item.getSlot().equals(itemToPurchase.toUpperCase()) &&
-                        myMoney.getCurrent().compareTo(item.getPrice()) >=0 && item.getInventory() >0) { // myMoney.getCurrent() >= item.getPrice() &&
+                        myMoney.getCurrent().compareTo(item.getPrice()) >= 0 && item.getInventory() >0) { // myMoney.getCurrent() >= item.getPrice() &&
                         valid = true;
                 }
 
@@ -178,17 +180,17 @@ public class VendingMachineCLI {
                     BigDecimal beforeTrans = myMoney.getCurrent();
                     item.setInventory(item.getInventory()-1);
                     myMoney.makePurchase(item.getPrice());
-                    System.out.println("===============================");
-                    System.out.println("  Your choice: "+item.getName() + " Cost: "+ item.getPrice());
-                    System.out.println("===============================");
-                    System.out.println("       "+item.getSound()+"       ");
-                    System.out.println("===============================");
+                    System.out.println("======================================");
+                    System.out.println("             " + item.getName());
+                    System.out.println("                $" + item.getPrice());
+                    System.out.println("======================================");
+                    System.out.println("        " +item.getSound()+"       ");
+                    System.out.println("======================================");
 
                     LogWriter log = new LogWriter("log.txt");
-                    Date datetime = new Date();
-                    
-                    log.writeToFile("Item sold: "+item.getName() + " Item slot: "+item.getSlot() +
-                            " Before Transaction: "+beforeTrans+" After Transaction: "+myMoney.getCurrent());
+
+                    log.writeToFile(item.getName() + " " + item.getSlot() +
+                            " $" + beforeTrans + " $" + myMoney.getCurrent());
 
                     con = false;
                     break;
@@ -196,7 +198,7 @@ public class VendingMachineCLI {
             }
 
             if (!valid){
-                System.out.println("transaction declined");
+                System.out.println("Transaction Declined. Returning to Purchase Menu");
                 con= false;
             }
         }
