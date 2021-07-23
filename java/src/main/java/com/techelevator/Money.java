@@ -15,8 +15,7 @@ public class Money {
     }
 
     public void makePurchase(double cost) {
-        if (current >= cost) {
             this.current -= cost;
-        }
+
     }
 }

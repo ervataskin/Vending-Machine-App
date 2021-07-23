@@ -24,6 +24,10 @@ public abstract class Item {
         return inventory;
     }
 
+    public void setInventory(int inventory) {
+        this.inventory = inventory;
+    }
+
     public String getName() {
         return name;
     }

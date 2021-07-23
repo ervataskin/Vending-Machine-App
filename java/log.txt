@@ -1,0 +1,2 @@
+first line.
+Item sold: ColaItem slot: C1Before Transaction: 10.0After Transaction: 8.75
