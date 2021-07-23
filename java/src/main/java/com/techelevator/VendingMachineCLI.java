@@ -106,7 +106,7 @@ public class VendingMachineCLI {
             } else if (choice.equals("Select Product")) {
                 selectProduct(myMoney);
             } else if (choice.equals("Finish Transaction")) {
-                //make and return change
+                System.out.println(myMoney.getChange(myMoney.getCurrent()));
                 stay = false;
             }
         }
@@ -115,6 +115,7 @@ public class VendingMachineCLI {
     public void feedMoney(Money myMoney) {
         Scanner scanner = new Scanner(System.in);
         boolean bool = true;
+        double prevAmount = myMoney.getCurrent();
 
         while (bool) {
             try {
@@ -130,6 +131,8 @@ public class VendingMachineCLI {
 
                 if (checkAmount.contains(myAmount)) {
                     myMoney.feedCurrent(myAmount);
+                    LogWriter log = new LogWriter("log.txt");
+                    log.writeToFile("FEED MONEY: " + prevAmount + " " + myMoney.getCurrent());
                 } else {
                     System.out.println("\nInvalid amount, returning back to purchase menu.");
                     break;

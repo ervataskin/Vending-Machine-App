@@ -18,4 +18,23 @@ public class Money {
             this.current -= cost;
 
     }
+
+    public String getChange(double amount) {
+
+        double amountInPennies = amount * 100;
+        double quarter;
+        double dime;
+        double nickel;
+
+        quarter = (int) (amountInPennies / 25);
+        amountInPennies %= 25;
+        dime = (int) (amountInPennies / 10);
+        amountInPennies %= 10;
+        nickel = (int) (amountInPennies / 5);
+        amountInPennies %= 5;
+
+        return "Quarters: " + quarter + "\nDimes: " + dime + "\nNickels: " + nickel;
+    }
+
+
 }
