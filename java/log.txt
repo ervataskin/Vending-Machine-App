@@ -1,13 +1,1 @@
-first line.
-Item sold: ColaItem slot: C1Before Transaction: 10.0After Transaction: 8.75
-Item sold: Little League Chew Item slot: D2 Before Transaction: 20.0 After Transaction: 19.05
-Item sold: Triplemint Item slot: D4 Before Transaction: 19.05 After Transaction: 18.3
-FEED MONEY: 0.0 10.0
-FEED MONEY: 0.0 12.0
-Item sold: Moonpie Item slot: B1 Before Transaction: 12.0 After Transaction: 10.2
-FEED MONEY: 10.2 15.2
-FEED MONEY: 0.0 10.0
-Item sold: Moonpie Item slot: B1 Before Transaction: 10.0 After Transaction: 8.2
-Item sold: Cowtales Item slot: B2 Before Transaction: 8.2 After Transaction: 6.699999999999999
-FEED MONEY: 0.0 10.0
-Item sold: Potato Crisps Item slot: A1 Before Transaction: 10.0 After Transaction: 6.95
+

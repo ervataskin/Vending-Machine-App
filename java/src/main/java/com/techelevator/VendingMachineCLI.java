@@ -4,8 +4,10 @@ import com.techelevator.view.Menu;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
 import java.nio.file.FileSystemNotFoundException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -50,7 +52,7 @@ public class VendingMachineCLI {
                 String[] lineArr = line.split("\\|");
                 String slot = lineArr[0];
                 String name = lineArr[1];
-                double price = Double.parseDouble(lineArr[2]);
+                BigDecimal price = new BigDecimal(lineArr[2]);
                 String type = lineArr[3];
 
                 // if type = Chips
@@ -115,19 +117,19 @@ public class VendingMachineCLI {
     public void feedMoney(Money myMoney) {
         Scanner scanner = new Scanner(System.in);
         boolean bool = true;
-        double prevAmount = myMoney.getCurrent();
+        BigDecimal prevAmount = myMoney.getCurrent();
 
         while (bool) {
             try {
                 System.out.print("\nPlease feed money (1.00, 2.00, 5.00, 10.00): ");
                 String amount = scanner.nextLine();
-                double myAmount = Double.parseDouble(amount);
+                BigDecimal myAmount = new BigDecimal(amount);
 
-                List<Double> checkAmount = new ArrayList<>();
-                checkAmount.add(1.00);
-                checkAmount.add(2.00);
-                checkAmount.add(5.00);
-                checkAmount.add(10.00);
+                List<BigDecimal> checkAmount = new ArrayList<>();
+                checkAmount.add(new BigDecimal("1.00"));
+                checkAmount.add(new BigDecimal("2.00"));
+                checkAmount.add(new BigDecimal("5.00"));
+                checkAmount.add(new BigDecimal("10.00"));
 
                 if (checkAmount.contains(myAmount)) {
                     myMoney.feedCurrent(myAmount);
@@ -167,13 +169,13 @@ public class VendingMachineCLI {
 
             for (Item item : itemList) {
                 if (item.getSlot().equals(itemToPurchase.toUpperCase()) &&
-                        myMoney.getCurrent() >= item.getPrice() && item.getInventory() >0) {
+                        myMoney.getCurrent().compareTo(item.getPrice()) >=0 && item.getInventory() >0) { // myMoney.getCurrent() >= item.getPrice() &&
                         valid = true;
                 }
 
                 if (valid) {
 
-                    double beforeTrans = myMoney.getCurrent();
+                    BigDecimal beforeTrans = myMoney.getCurrent();
                     item.setInventory(item.getInventory()-1);
                     myMoney.makePurchase(item.getPrice());
                     System.out.println("===============================");
@@ -183,11 +185,10 @@ public class VendingMachineCLI {
                     System.out.println("===============================");
 
                     LogWriter log = new LogWriter("log.txt");
+                    Date datetime = new Date();
+                    
                     log.writeToFile("Item sold: "+item.getName() + " Item slot: "+item.getSlot() +
                             " Before Transaction: "+beforeTrans+" After Transaction: "+myMoney.getCurrent());
-
-
-                    // log transaction in log.txt
 
                     con = false;
                     break;

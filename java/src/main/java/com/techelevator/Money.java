@@ -4,34 +4,36 @@ import java.math.BigDecimal;
 
 public class Money {
 
-    private double current = 0;
+    private BigDecimal current = new BigDecimal("0.00");
 
-    public double getCurrent() {
+    public BigDecimal getCurrent() {
         return current;
     }
 
-    public void feedCurrent(double money){
-        this.current += money;
+    public void feedCurrent(BigDecimal money){
+        this.current =this.current.add(money);
     }
 
-    public void makePurchase(double cost) {
-            this.current -= cost;
+    public void makePurchase(BigDecimal cost) {
+           this.current = this.current.subtract(cost);
 
     }
 
-    public String getChange(double amount) {
+    public String getChange(BigDecimal amount) {
 
-        double amountInPennies = amount * 100;
-        double quarter;
-        double dime;
-        double nickel;
+        double amountInPennies = amount.doubleValue()*100;
+
+
+       int quarter;
+       int dime;
+       int nickel;
 
         quarter = (int) (amountInPennies / 25);
         amountInPennies %= 25;
-        dime = (int) (amountInPennies / 10);
+        dime =  (int) (amountInPennies / 10);
         amountInPennies %= 10;
         nickel = (int) (amountInPennies / 5);
-        amountInPennies %= 5;
+
 
         return "Quarters: " + quarter + "\nDimes: " + dime + "\nNickels: " + nickel;
     }
