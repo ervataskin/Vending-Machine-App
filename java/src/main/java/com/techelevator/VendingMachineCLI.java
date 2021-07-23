@@ -70,7 +70,7 @@ public class VendingMachineCLI {
 				}
 
 				//Item items = new Item(slot, name, price);
-			//	itemList.add(item);
+				//	itemList.add(item);
 
 			}
 		} catch (FileSystemNotFoundException | FileNotFoundException e) {
@@ -114,35 +114,43 @@ public class VendingMachineCLI {
 
 	public void feedMoney(Money myMoney){
 		Scanner scanner = new Scanner(System.in);
-
 		boolean bool= true;
 
 		while(bool) {
+			try {
+				System.out.print("\nPlease feed money (1.00, 2.00, 5.00, 10.00): ");
+				String amount = scanner.nextLine();
+				double myAmount = Double.parseDouble(amount);
 
-			System.out.print("\nHow much would you like to add: ");
-			String amount = scanner.nextLine();
-			double myAmount = Double.parseDouble(amount);
+				List<Double> checkAmount = new ArrayList<>();
+				checkAmount.add(1.00);
+				checkAmount.add(2.00);
+				checkAmount.add(5.00);
+				checkAmount.add(10.00);
 
-			List<Double> checkAmount = new ArrayList<>();
-			checkAmount.add(1.00);
-			checkAmount.add(2.00);
-			checkAmount.add(5.00);
-			checkAmount.add(10.00);
+				if (checkAmount.contains(myAmount)) {
+					myMoney.feedCurrent(myAmount);
+				} else {
+					System.out.println("\nInvalid amount, returning back to purchase menu.");
+					break;
+				}
 
-			if (checkAmount.contains(myAmount)) {
-				myMoney.feedCurrent(myAmount);
-			}
-			else System.out.println("Invalid amount");
+				System.out.print("\nWould you like to feed more money? (Y/N): ");
+				String yesOrNo = scanner.nextLine().toLowerCase();
+				if (yesOrNo.equals("n")){
+					bool = false;
+				} else if (!yesOrNo.equals("y")) {
+					System.out.println("\nInvalid choice, returning back to purchase menu.");
+					bool = false;
+				}
 
-			System.out.print("\nWould you like to add more? (Y/N)");
-			String yesOrNo = scanner.nextLine().toLowerCase();
-			if (yesOrNo.equals("n")){
-				bool = false;
+			} catch (NumberFormatException e) {
+				System.out.println("\nInvalid entry, returning back to purchase menu.");
+				break;
 			}
 		}
-
-
 	}
+
      public void selectProduct(Money myMoney) {
 		 displayItems();
 		 Scanner scanner = new Scanner(System.in);
@@ -150,11 +158,13 @@ public class VendingMachineCLI {
 		 System.out.println("Which item would you like to select");
 		 String itemToPurchase = scanner.nextLine();
 
+
 		 boolean valid = false;
 
 		 for (Item item : itemList) {
-			 if (item.getSlot().equals(itemToPurchase)) {
+			 if (item.getSlot().equals(itemToPurchase.toUpperCase())) {
 			 	//Copy item?
+				 System.out.println("Found ITem");
 			 	valid = true;
 			 }
 
@@ -169,10 +179,10 @@ public class VendingMachineCLI {
 		 }
 	 }
 
-
-
-
 	public static void main(String[] args) {
+		System.out.println("==============================================");
+		System.out.println("        Welcome to the Vendo-Matic 800!       ");
+		System.out.println("==============================================");
 		Menu menu = new Menu(System.in, System.out);
 		VendingMachineCLI cli = new VendingMachineCLI(menu);
 		cli.run();
