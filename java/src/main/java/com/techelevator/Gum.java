@@ -10,6 +10,6 @@ public class Gum extends Item {
     }
 
     public String getSound() {
-        return "Chew Chew, Yum";
+        return "Chew Chew, Yum!";
     }
 }

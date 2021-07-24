@@ -7,8 +7,7 @@ public abstract class Item {
     private String slot;
     private String name;
     private BigDecimal price;
-    private String type;
-
+    //private String type;
     private int inventory;
 
     public Item(String slot, String name, BigDecimal price) {
@@ -35,10 +34,6 @@ public abstract class Item {
     public BigDecimal getPrice() {
         return price;
     }
-    public String getType() {
-        return type;
-    }
 
     public abstract String getSound();
-
 }
